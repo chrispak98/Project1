@@ -45,29 +45,39 @@ def classSizes(data):
 
 
 def findMonth(a):
-# Find the most common birth month form this data
-# Input: list of dictionaries
-# Output: Return the month (1-12) that had the most births in the data
+	monthdict = {}
 
-	pass
+	for x in a:
+		birth = x['DOB'].split('/')[0]
+
+		if birth in monthdict:
+			monthdict[birth] = monthdict.get(birth) + 1
+		else:
+			monthdict[birth] = 1
+	sort = sorted(monthdict.items(), key = lambda x: x[1], reverse = True)
+	return int(sort[0][0])
+
+
+
 
 def mySortPrint(a,col,fileName):
-#Similar to mySort, but instead of returning single
-#Student, the sorted data is saved to a csv file.
-# as fist,last,email
-#Input: list of dictionaries, col (key) to sort by and output file name
-#Output: No return value, but the file is written
+	outFile = open(fileName, 'w')
+	sort = sorted(a, key = lambda x: x[col])
 
-	pass
+	for x in sort:
+		outFile.write(x['First'] + ',' + x['Last'] + ',' + x['Email'] + '\n')
+
+	outFile.close()
+
+
 
 def findAge(a):
-# def findAge(a):
-# Input: list of dictionaries
-# Output: Return the average age of the students and round that age to the nearest
-# integer.  You will need to work with the DOB and the current date to find the current
-# age in years.
-
-	pass
+	sum = 0
+	for x in a:
+		age = int(x['DOB'].split('/')[2])
+		ages = 2018 - age
+		sum = sum + ages
+	return int(sum / len(a))
 
 
 ################################################################
