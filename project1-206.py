@@ -5,29 +5,43 @@ from datetime import date
 
 
 def getData(file):
-# get a list of dictionary objects from the file
-#Input: file name
-#Ouput: return a list of dictionary objects where
-#the keys are from the first row in the data. and the values are each of the other rows
+	f = open(file, "r")
+	lines = f.readlines()
+	f.close()
+	dictobjects = []
 
-	pass
+	for x in range(1, len(lines)):
+		dict = {}
+
+		line = lines[x]
+		values = line.split(",")
+
+		dict['First'] = values[0]
+		dict['Last'] = values[1]
+		dict['Email'] = values[2]
+		dict['Class'] = values[3]
+		dict['DOB'] = values[4]
+
+		dictobjects.append(dict)
+	return dictobjects
 
 def mySort(data,col):
-# Sort based on key/column
-#Input: list of dictionaries and col (key) to sort on
-#Output: Return the first item in the sorted list as a string of just: firstName lastName
-
-	pass
+	sort = sorted(data, key = lambda x: x[col],)
+	dictlist = sort[0]
+	return dictlist["First"] + " " + dictlist["Last"]
 
 
 def classSizes(data):
-# Create a histogram
-# Input: list of dictionaries
-# Output: Return a list of tuples sorted by the number of students in that class in
-# descending order
-# [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
+	ClassSize = {}
 
-	pass
+	for x in data:
+		if x["Class"] in ClassSize:
+			ClassSize[x["Class"]] = ClassSize.get(x["Class"]) + 1
+		else:
+			ClassSize[x["Class"]] = 1
+	sort = sorted(ClassSize.items(), key = lambda x: x[1], reverse = True)
+
+	return sort
 
 
 def findMonth(a):
